@@ -1,59 +1,60 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import './src/presenter/screens/main/main_screen.dart';
 
-void main(List<String> args) {
-  runApp(const CountApp());
+Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: "https://gkmoxnuzhrlqhebujivd.supabase.co",
+    anonKey:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdrbW94bnV6aHJscWhlYnVqaXZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQyMTM1MDAsImV4cCI6MTk4OTc4OTUwMH0.-7udRBWdyHZmdRUzVQANOBTOU1LjwuyUFlac4m6wakc",
+  );
+  runApp(const MyApp());
 }
 
-class CountApp extends StatelessWidget {
-  const CountApp({super.key});
+// App 초기설정, 전체 state 관리
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'State Management - Plain',
-      home: CountPage(),
-    );
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late final StreamSubscription<AuthState> _authSubscription;
+  User? _user;
+  final Logger _logger = Logger();
+
+  @override
+  void initState() {
+    super.initState();
+    _authSubscription =
+        Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+      final AuthChangeEvent event = data.event;
+      final Session? session = data.session;
+      setState(() {
+        _user = session?.user;
+        _logger.d("event: $event, user: ${_user?.email}");
+      });
+    });
   }
-}
-
-class CountPage extends StatefulWidget {
-  const CountPage({super.key});
 
   @override
-  State<CountPage> createState() => _CountPageState();
-}
-
-class _CountPageState extends State<CountPage> {
-  int _count = 0;
+  void dispose() {
+    _authSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('State Management - Plain')),
-      body: Center(
-        child: Text(
-          '$_count',
-          style: const TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () => setState(() => _count++),
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(height: 8),
-          FloatingActionButton(
-            onPressed: () => setState(() => _count--),
-            child: const Icon(Icons.remove),
-          ),
-        ],
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'LEADU',
+      theme: ThemeData(),
+      home: MainScreen(),
     );
   }
 }
