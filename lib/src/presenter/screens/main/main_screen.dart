@@ -3,6 +3,7 @@ import 'package:leadu/src/presenter/components/side_menu.dart';
 import 'package:leadu/src/presenter/responsive/responsive.dart';
 import 'package:leadu/src/presenter/screens/contents/content_screen.dart';
 import 'package:leadu/src/presenter/screens/main/components/list_of_contents.dart';
+import 'package:leadu/src/presenter/screens/navs/home_nav.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -13,12 +14,12 @@ class MainScreen extends StatelessWidget {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
       body: Responsive(
-        mobile: ListOfContents(),
+        mobile: HomeNav(),
         tablet: Row(
           children: [
             Expanded(
               flex: 6,
-              child: ListOfContents(),
+              child: HomeNav(),
             ),
             Expanded(
               flex: 9,
@@ -34,7 +35,7 @@ class MainScreen extends StatelessWidget {
             ),
             Expanded(
               flex: _size.width > 1340 ? 3 : 5,
-              child: ListOfContents(),
+              child: HomeNav(),
             ),
             Expanded(
               flex: _size.width > 1340 ? 8 : 10,
