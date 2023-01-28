@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:leadu/src/presenter/components/side_menu.dart';
-import 'package:leadu/src/presenter/responsive/responsive.dart';
-import 'package:leadu/src/presenter/screens/contents/content_screen.dart';
-import 'package:leadu/src/presenter/screens/main/components/list_of_contents.dart';
-import 'package:leadu/src/presenter/screens/navs/home_nav.dart';
+import '../../components/side_menu.dart';
+import '../../screens/contents/content_screen.dart';
+import '../../responsive/responsive.dart';
+import '../../../config/navs/home_nav.dart';
+
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -11,12 +11,12 @@ class MainScreen extends StatelessWidget {
   // final _future = Supabase.instance.client
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Responsive(
-        mobile: HomeNav(),
+        mobile: const HomeNav(),
         tablet: Row(
-          children: [
+          children: const [
             Expanded(
               flex: 6,
               child: HomeNav(),
@@ -30,16 +30,16 @@ class MainScreen extends StatelessWidget {
         desktop: Row(
           children: [
             Expanded(
-              flex: _size.width > 1340 ? 2 : 4,
-              child: SideMenu(),
+              flex: size.width > 1340 ? 2 : 4,
+              child: const SideMenu(),
             ),
             Expanded(
-              flex: _size.width > 1340 ? 3 : 5,
-              child: HomeNav(),
+              flex: size.width > 1340 ? 3 : 5,
+              child: const HomeNav(),
             ),
             Expanded(
-              flex: _size.width > 1340 ? 8 : 10,
-              child: ContentScreen(),
+              flex: size.width > 1340 ? 8 : 10,
+              child: const ContentScreen(),
             ),
           ],
         ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
-import 'package:leadu/src/presenter/getx/controller/count_controller.dart';
-import 'package:leadu/src/presenter/getx/view/count_page.dart';
+
+import 'controller/count_controller.dart';
+import 'view/count_page.dart';
 
 class CountApp extends StatelessWidget {
   const CountApp({super.key});

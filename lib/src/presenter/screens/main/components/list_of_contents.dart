@@ -3,28 +3,24 @@ import 'package:flutter/material.dart';
 import './content_card.dart';
 import '../../../../config/theme.dart';
 import '../../../responsive/responsive.dart';
-import '../../../components/side_menu.dart';
 
 class ListOfContents extends StatefulWidget {
+  void Function() onMenuTap;
   // Press "Command + ." to insert code snippet.
-  const ListOfContents({super.key});
+  // final GlobalKey<ScaffoldState> homeScaffKey;
+  ListOfContents({
+    super.key,
+    required this.onMenuTap,
+  });
 
   @override
   State<ListOfContents> createState() => _ListOfContentsState();
 }
 
 class _ListOfContentsState extends State<ListOfContents> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      // drawer: 해당 Scaffold의 drawer를 열고 닫을 수 있는 버튼을 제공합니다.
-      drawer: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 250),
-        child: const SideMenu(),
-      ),
       body: Container(
         padding: const EdgeInsets.only(top: kIsWeb ? kDefaultPadding : 0),
         decoration: const BoxDecoration(
@@ -34,16 +30,17 @@ class _ListOfContentsState extends State<ListOfContents> {
           child: Column(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                padding: const EdgeInsets.only(
+                  left: kDefaultPadding,
+                  right: kDefaultPadding,
+                  top: kDefaultPadding / 2,
+                ),
                 child: Row(
                   children: [
                     if (!Responsive.isDesktop(context))
                       IconButton(
                         icon: const Icon(Icons.menu),
-                        onPressed: () {
-                          _scaffoldKey.currentState!.openDrawer();
-                        },
+                        onPressed: widget.onMenuTap,
                       ),
                     if (!Responsive.isDesktop(context))
                       const SizedBox(width: 5),

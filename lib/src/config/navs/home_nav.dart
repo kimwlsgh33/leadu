@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadu/src/config/theme.dart';
+import 'package:leadu/src/presenter/components/side_menu.dart';
+import 'package:leadu/src/presenter/responsive/responsive.dart';
 import 'package:leadu/src/presenter/screens/contents/content_screen.dart';
 import 'package:leadu/src/presenter/screens/main/components/list_of_contents.dart';
 import 'package:leadu/src/presenter/screens/quests/quest_screen.dart';
+import 'package:leadu/src/presenter/screens/todos/today_todos_screen.dart';
+import 'package:leadu/src/presenter/screens/todos/tommorow_plan_screen.dart';
 
 class HomeNav extends StatefulWidget {
   const HomeNav({super.key});
@@ -13,6 +16,7 @@ class HomeNav extends StatefulWidget {
 }
 
 class _HomeNavState extends State<HomeNav> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _page = 0;
   late PageController _pageController;
 
@@ -38,40 +42,61 @@ class _HomeNavState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const Drawer(
+        child: SideMenu(),
+      ),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: [
-          ListOfContents(),
-          QuestScreen(),
-          ContentScreen(),
+          const QuestScreen(),
+          const TodayTodoScreen(),
+          const TomorrowPlan(),
+          ListOfContents(
+            onMenuTap: () {
+              _scaffoldKey.currentState!.openDrawer();
+            },
+          ),
+          if (Responsive.isDesktop(context)) const ContentScreen(),
         ],
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.only(top: 10),
+        // padding: const EdgeInsets.only(top: 10),
         decoration: const BoxDecoration(
           color: kBgDarkColor,
         ),
-        child: CupertinoTabBar(
+        child: NavigationBar(
           backgroundColor: kBgDarkColor,
-          border: const Border(),
-          onTap: onPageChanged,
-          items: [
-            BottomNavigationBarItem(
+          onDestinationSelected: onPageChanged,
+          destinations: [
+            NavigationDestination(
               icon: Icon(Icons.home,
                   color: _page == 0 ? Colors.blue : Colors.grey),
               label: "",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dataset,
+            NavigationDestination(
+              icon: Icon(Icons.view_list,
                   color: _page == 1 ? Colors.blue : Colors.grey),
               label: "",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.question_mark_rounded,
+            NavigationDestination(
+              icon: Icon(Icons.edit_note,
                   color: _page == 2 ? Colors.blue : Colors.grey),
               label: "",
             ),
+            NavigationDestination(
+              icon: Icon(Icons.dataset,
+                  color: _page == 3 ? Colors.blue : Colors.grey),
+              label: "",
+            ),
+            if (Responsive.isDesktop(context))
+              NavigationDestination(
+                icon: Icon(Icons.question_mark_rounded,
+                    color: _page == 4 ? Colors.blue : Colors.grey),
+                label: "",
+              ),
           ],
         ),
       ),

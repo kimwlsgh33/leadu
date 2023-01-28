@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:leadu/src/presenter/controller/count_controller.dart';
 // import 'package:logger/logger.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 import './src/presenter/screens/main/main_screen.dart';
@@ -50,11 +52,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'LEADU',
       theme: ThemeData(),
-      home: MainScreen(),
+      darkTheme: ThemeData.dark(),
+      initialBinding: BindingsBuilder(() {
+        Get.put(CountController());
+      }),
+      initialRoute: '/',
+      unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold()),
+      getPages: [
+        GetPage(
+          name: '/',
+          page: () => const MainScreen(),
+        ),
+      ],
     );
   }
 }

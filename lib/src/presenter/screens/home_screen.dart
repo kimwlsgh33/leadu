@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leadu/src/presenter/responsive/desktop_screen.dart';
 import 'package:leadu/src/presenter/responsive/mobile_screen.dart';
-import 'package:leadu/src/presenter/responsive/responsive_layout.dart';
+import '../responsive/responsive.dart';
 import 'package:leadu/src/presenter/responsive/tablet_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       }(),
       initialData: false,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return ResponsiveLayout(
+        return Responsive(
           mobile: MobileScreen(),
           tablet: TabletScreen(),
           desktop: DesktopScreen(),

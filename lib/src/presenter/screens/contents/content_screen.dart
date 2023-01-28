@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import '../../../config/theme.dart';
 import './components/header.dart';
@@ -51,14 +50,14 @@ class ContentScreen extends StatelessWidget {
                                           text: '이름',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .button,
+                                              .labelLarge,
                                           children: [
                                             TextSpan(
                                               text:
                                                   " <jinho971031@gmail.com> to Jerry Torp",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .caption,
+                                                  .bodySmall,
                                             )
                                           ],
                                         ),
@@ -67,7 +66,7 @@ class ContentScreen extends StatelessWidget {
                                         "Inspiration for the day",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline6,
+                                            .titleLarge,
                                       )
                                     ],
                                   ),
@@ -75,7 +74,7 @@ class ContentScreen extends StatelessWidget {
                                 const SizedBox(width: kDefaultPadding / 2),
                                 Text(
                                   "10:30 AM",
-                                  style: Theme.of(context).textTheme.caption,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             ),
@@ -108,7 +107,7 @@ class ContentScreen extends StatelessWidget {
                                           'Download All',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .caption,
+                                              .bodySmall,
                                         ),
                                         const SizedBox(width: kDefaultPadding / 4),
                                         WebsafeSvg.asset(
