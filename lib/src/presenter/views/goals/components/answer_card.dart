@@ -12,11 +12,12 @@ class AnswerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('AnswerCard build');
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: goal.category.color,
+        // color: goal.category.color,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -30,7 +31,8 @@ class AnswerCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              goal.category.name,
+              goal.content,
+              // goal.category.name,
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,

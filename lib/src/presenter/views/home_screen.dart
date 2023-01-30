@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       }(),
       initialData: false,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return Responsive(
+        return const Responsive(
           mobile: MobileScreen(),
           tablet: TabletScreen(),
           desktop: DesktopScreen(),

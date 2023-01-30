@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:leadu/src/presenter/views/contents/content_screen.dart';
 import '../../components/side_menu.dart';
-import '../../screens/contents/content_screen.dart';
 import '../../responsive/responsive.dart';
 import '../../../config/navs/home_nav.dart';
 

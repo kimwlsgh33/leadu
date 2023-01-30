@@ -45,10 +45,21 @@ dependencies:
   google_fonts: ^4.0.1
   sqflite: ^2.2.3
   intl: ^0.18.0
+  path: ^1.8.2
+  uuid: ^3.0.7
+  flutter_bloc: ^8.1.1
+  dio: ^4.0.6
+  mockito: ^5.3.2
+  drift: ^2.5.0
+  flutter_secure_storage: ^7.0.1
+  get_it: ^7.2.0
+  injectable: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  injectable_generator:
+  build_runner:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

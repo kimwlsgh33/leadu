@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:leadu/src/config/theme.dart';
 import 'package:leadu/src/presenter/components/side_menu.dart';
 import 'package:leadu/src/presenter/responsive/responsive.dart';
-import 'package:leadu/src/presenter/screens/contents/content_screen.dart';
-import 'package:leadu/src/presenter/screens/main/components/list_of_contents.dart';
-import 'package:leadu/src/presenter/screens/quests/quest_screen.dart';
-import 'package:leadu/src/presenter/screens/todos/today_todos_screen.dart';
-import 'package:leadu/src/presenter/screens/todos/tommorow_plan_screen.dart';
+import 'package:leadu/src/presenter/views/contents/content_screen.dart';
+import 'package:leadu/src/presenter/views/goals/goal_screen.dart';
+import 'package:leadu/src/presenter/views/main/components/list_of_contents.dart';
+import 'package:leadu/src/presenter/views/todos/today_screen.dart';
+import 'package:leadu/src/presenter/views/todos/tomorrow_screen.dart';
 
 class HomeNav extends StatefulWidget {
   const HomeNav({super.key});
@@ -51,9 +51,9 @@ class _HomeNavState extends State<HomeNav> {
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: [
-          const QuestScreen(),
-          const TodayTodoScreen(),
-          const TomorrowPlan(),
+          GoalScreen(),
+          const TodayScreen(),
+          const TomorrowScreen(),
           ListOfContents(
             onMenuTap: () {
               _scaffoldKey.currentState!.openDrawer();
