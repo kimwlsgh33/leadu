@@ -28,20 +28,22 @@ class AppRouter {
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) {
             final goal = settings.arguments as Goal;
-
-            // return GoalDetailScreen(goal: goal);
             return BlocProvider.value(
               value: _goalBloc,
               child: GoalDetailScreen(goal: goal),
             );
           },
           transitionsBuilder: (_, animation, __, child) {
-            return FadeTransition(
-              opacity: animation.drive(
-                Tween<double>(begin: 0.0, end: 1.0).chain(
-                  CurveTween(curve: Curves.easeIn),
-                ),
-              ),
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              // opacity: animation.drive(
+              //   Tween<double>(begin: 0.0, end: 1.0).chain(
+              //     CurveTween(curve: Curves.easeIn),
+              //   ),
+              // ),
               child: child,
             );
           },

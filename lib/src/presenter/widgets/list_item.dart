@@ -22,9 +22,13 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: FadeTransition(
-        opacity: animation,
+      padding: const EdgeInsets.only(bottom: 4.0),
+      child: Card(
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 2,
         child: Dismissible(
           key: Key(goal.id),
           background: const SuccessContainer(),
@@ -65,18 +69,21 @@ class ListItem extends StatelessWidget {
               return Future.value(true);
             }
           },
-          child: Hero(
-            tag: goal.id,
-            child: AnswerCard(
-              goal: goal,
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/goal_detail',
-                  arguments: goal,
-                );
-              },
-              onRemove: onRemove,
+          child: SizeTransition(
+            sizeFactor: animation,
+            child: Hero(
+              tag: goal.id,
+              child: AnswerCard(
+                goal: goal,
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/goal_detail',
+                    arguments: goal,
+                  );
+                },
+                onRemove: onRemove,
+              ),
             ),
           ),
         ),

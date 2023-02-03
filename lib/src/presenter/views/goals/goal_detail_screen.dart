@@ -45,14 +45,16 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
       ),
       body: Column(
         children: [
-          Hero(
-            tag: widget.goal.id,
-            child: AnswerCard(goal: widget.goal, isDetail: true),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
+                smallVerticalSpace(),
+                Hero(
+                  tag: widget.goal.id,
+                  child: AnswerCard(goal: widget.goal, isDetail: true),
+                ),
+                smallVerticalSpace(),
                 FullRowTextField(
                   controller: _controller,
                   hintText: '계획을 입력해주세요',
@@ -95,15 +97,18 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
               context.read<GoalBloc>().add(CompleteGoal(children[index]));
             }
           },
-          child: AnswerCard(
-            goal: children[index],
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                AppRouter.goalDetail,
-                arguments: children[index],
-              );
-            },
+          child: Hero(
+            tag: children[index].id,
+            child: AnswerCard(
+              goal: children[index],
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRouter.goalDetail,
+                  arguments: children[index],
+                );
+              },
+            ),
           ),
         ),
         separatorBuilder: (context, index) => smallVerticalSpace(),
