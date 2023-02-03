@@ -107,6 +107,29 @@ class GoalProvider {
     });
   }
 
+  Future<List<Goal>> getNotCompleted() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'goal',
+      where: '$columnDone = ?',
+      whereArgs: [0],
+      orderBy: '$columnPriority ASC',
+    );
+
+    return List.generate(maps.length, (i) {
+      var goalDate = int.parse(maps[i][columnPriority].toString());
+      // _logger.i('goalDate: $goalDate');
+      return Goal(
+        id: maps[i][columnId],
+        parentId: maps[i][columnParentId],
+        content: maps[i][columnContent],
+        goalDate: DateTime.fromMillisecondsSinceEpoch(goalDate),
+        priority: maps[i][columnPriority],
+        done: maps[i][columnDone] == 1,
+      );
+    });
+  }
+
   Future<List<Goal>> getRoots({bool done = false}) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(

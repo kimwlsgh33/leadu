@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 const _cardRadius = 8.0;
@@ -33,17 +34,16 @@ class QuestCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
-            Text(
-              quest,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                letterSpacing: 1.2,
+            AnimatedTextKit(animatedTexts: [
+              TypewriterAnimatedText(
+                quest,
+                textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                speed: const Duration(milliseconds: 100),
               ),
-              // maxLines: 2,
-              textAlign: TextAlign.center,
-            ),
+            ]),
           ],
         ),
       ),

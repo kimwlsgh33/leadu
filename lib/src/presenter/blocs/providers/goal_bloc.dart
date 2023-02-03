@@ -84,7 +84,7 @@ class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
   //================================================================
   void _onInitGoal(InitGoal event, Emitter<List<Goal>> emit) async {
     if (state.isEmpty) {
-      _goals = await GoalRepository.getRoots();
+      _goals = await GoalRepository.getNotCompleted();
       emit(_goals);
     }
   }

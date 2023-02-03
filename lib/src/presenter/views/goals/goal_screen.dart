@@ -27,7 +27,6 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
     context.read<GoalBloc>().add(InitGoal());
 
     void onAdd(value) {
-      _listKey.currentState?.insertItem(0);
       context.read<GoalBloc>().add(AddGoal(value));
     }
 
@@ -70,6 +69,7 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
                 var roots = goals
                     .where((element) => element.parentId == "root")
                     .toList();
+                // var roots = goals;
 
                 if (roots.isEmpty) {
                   return const SizedBox(
@@ -78,29 +78,20 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
                   );
                 }
 
-                return AnimatedList(
+                return ListView.separated(
                   key: _listKey,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  initialItemCount: roots.length,
-                  itemBuilder: (context, index, animation) => ListItem(
+                  itemCount: roots.length,
+                  itemBuilder: (context, index) => ListItem(
                     key: ValueKey(roots[index].id),
                     goal: roots[index],
-                    animation: animation,
-                    onRemove: () {
-                      removeByView(
-                        goal: roots[index],
-                        index: index,
-                      );
-                      context.read<GoalBloc>().add(RemoveGoal(roots[index]));
-                    },
-                    onCompleted: () {
-                      removeByView(
-                        goal: roots[index],
-                        index: index,
-                      );
-                      context.read<GoalBloc>().add(CompleteGoal(roots[index]));
-                    },
+                    onRemove: () =>
+                        context.read<GoalBloc>().add(RemoveGoal(roots[index])),
+                    onCompleted: () => context
+                        .read<GoalBloc>()
+                        .add(CompleteGoal(roots[index])),
                   ),
+                  separatorBuilder: (context, index) => smallVerticalSpace(),
                 );
               }),
             ),
@@ -120,20 +111,5 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
   void dispose() {
     _textController.dispose();
     super.dispose();
-  }
-
-  removeByView({
-    required goal,
-    required index,
-  }) {
-    _listKey.currentState?.removeItem(
-      index,
-      (context, animation) => ListItem(
-        goal: goal,
-        animation: animation,
-        onRemove: () {},
-        onCompleted: () {},
-      ),
-    );
   }
 }

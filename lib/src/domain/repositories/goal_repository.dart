@@ -12,6 +12,10 @@ class GoalRepository {
     return await _goalProvider.getAll();
   }
 
+  static Future<List<Goal>> getNotCompleted() async {
+    return await _goalProvider.getNotCompleted();
+  }
+
   static Future<List<Goal>> getRoots() async {
     return await _goalProvider.getRoots();
   }

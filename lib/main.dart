@@ -41,13 +41,31 @@ class _MyAppState extends State<MyApp> {
         theme: msLightTheme,
         darkTheme: msDarkTheme,
         onGenerateRoute: _appRouter.onGeneratedRoute,
-        // home: MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider.value(value: _goalBloc),
-        //   ],
-        //   child: const MainScreen(),
-        // ),
       ),
     );
   }
 }
+
+// class _MyAppState extends State<MyApp> {
+//   final AppRouter _appRouter = AppRouter();
+//
+//   @override
+//   void dispose() {
+//     _appRouter.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (_) => ThemeBloc(),
+//       child: MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         title: 'LEADU',
+//         theme: msLightTheme,
+//         darkTheme: msDarkTheme,
+//         onGenerateRoute: _appRouter.onGeneratedRoute,
+//       ),
+//     );
+//   }
+// }

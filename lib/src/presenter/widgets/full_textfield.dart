@@ -4,17 +4,19 @@ class FullRowTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final Function(String) onSubmitted;
+  final OutlineInputBorder? border;
 
   const FullRowTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.onSubmitted,
+    this.border,
   });
 
   @override
   Widget build(BuildContext context) {
-    final inputBorder =
+    final inputBorder = border ??
         OutlineInputBorder(borderSide: Divider.createBorderSide(context));
 
     return Row(

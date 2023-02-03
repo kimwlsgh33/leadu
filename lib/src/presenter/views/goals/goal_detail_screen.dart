@@ -38,21 +38,22 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '어떻게 한다면',
+          '어떻게?',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 0,
       ),
       body: Column(
         children: [
-          Hero(
-            tag: widget.goal.id,
-            child: AnswerCard(goal: widget.goal, isDetail: true),
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
+                Hero(
+                  tag: widget.goal.id,
+                  child: AnswerCard(goal: widget.goal, isDetail: true),
+                ),
+                smallVerticalSpace(),
                 FullRowTextField(
                   controller: _controller,
                   hintText: '계획을 입력해주세요',
@@ -95,15 +96,18 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
               context.read<GoalBloc>().add(CompleteGoal(children[index]));
             }
           },
-          child: AnswerCard(
-            goal: children[index],
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                AppRouter.goalDetail,
-                arguments: children[index],
-              );
-            },
+          child: Hero(
+            tag: children[index].id,
+            child: AnswerCard(
+              goal: children[index],
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRouter.goalDetail,
+                  arguments: children[index],
+                );
+              },
+            ),
           ),
         ),
         separatorBuilder: (context, index) => smallVerticalSpace(),
