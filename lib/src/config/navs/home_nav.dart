@@ -51,7 +51,7 @@ class _HomeNavState extends State<HomeNav> {
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: [
-          GoalScreen(),
+          const GoalScreen(),
           const TodayScreen(),
           const TomorrowScreen(),
           ListOfContents(

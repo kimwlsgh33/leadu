@@ -54,6 +54,8 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   get_it: ^7.2.0
   injectable: ^2.1.0
+  rxdart: ^0.27.7
+  bloc_concurrency: ^0.2.0
 
 dev_dependencies:
   flutter_test:

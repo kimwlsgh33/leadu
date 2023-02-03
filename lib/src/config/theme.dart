@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //================================================
 // Colors
@@ -29,8 +30,17 @@ const kakaoDeepYellow = Color(0xFFF4DA00);
 //================================================
 // Theme
 //================================================
-final darkTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: mobileBackgroundColor,
-  backgroundColor: kakaoBackgroundColor,
-  primaryColor: primaryColor,
+final msLightTheme = ThemeData.light().copyWith(
+  scaffoldBackgroundColor: const Color(0xFFFAF9F8),
+  textTheme: GoogleFonts.nanumGothicTextTheme(),
+  splashColor: Colors.amber,
+  colorScheme: const ColorScheme.light().copyWith(
+    primary: kPrimaryColor,
+    background: const Color(0xFFFAF9F8),
+    secondary: Colors.grey,
+    onPrimary: Colors.white,
+  ),
+);
+final msDarkTheme = ThemeData.light().copyWith(
+  scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
 );

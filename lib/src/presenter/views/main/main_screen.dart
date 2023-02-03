@@ -7,7 +7,6 @@ import '../../../config/navs/home_nav.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
-
   // final _future = Supabase.instance.client
   @override
   Widget build(BuildContext context) {

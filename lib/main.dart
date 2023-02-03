@@ -1,12 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:leadu/src/presenter/controller/goal_controller.dart';
-import 'package:leadu/src/presenter/views/main/main_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:leadu/src/config/routes/routes.dart';
+import 'package:leadu/src/config/theme.dart';
+import 'package:leadu/src/presenter/blocs/observer.dart';
+import 'package:leadu/src/presenter/blocs/providers/theme_bloc.dart';
+// import 'package:leadu/src/presenter/views/todos/today_screen.dart';
 
 Future<void> main(List<String> args) async {
   // WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = Observer();
   runApp(const MyApp());
 }
 
@@ -19,36 +23,31 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final AppRouter _appRouter = AppRouter();
+
+  @override
+  void dispose() {
+    _appRouter.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'LEADU',
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      home: const MainScreen(),
+    return BlocProvider(
+      create: (_) => ThemeBloc(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'LEADU',
+        theme: msLightTheme,
+        darkTheme: msDarkTheme,
+        onGenerateRoute: _appRouter.onGeneratedRoute,
+        // home: MultiBlocProvider(
+        //   providers: [
+        //     BlocProvider.value(value: _goalBloc),
+        //   ],
+        //   child: const MainScreen(),
+        // ),
+      ),
     );
   }
 }
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'LEADU',
-//       theme: ThemeData(),
-//       darkTheme: ThemeData.dark(),
-//       initialBinding: BindingsBuilder(() {
-//         Get.lazyPut(() => GoalController());
-//       }),
-//       initialRoute: '/',
-//       unknownRoute: GetPage(name: '/notfound', page: () => const Scaffold()),
-//       getPages: [
-//         GetPage(
-//           name: '/',
-//           page: () => const MainScreen(),
-//         ),
-//       ],
-//     );
-//   }
-// }

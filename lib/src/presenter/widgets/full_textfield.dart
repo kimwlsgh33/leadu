@@ -2,24 +2,35 @@ import 'package:flutter/material.dart';
 
 class FullRowTextField extends StatelessWidget {
   final TextEditingController controller;
+  final String hintText;
+  final Function(String) onSubmitted;
+
   const FullRowTextField({
     super.key,
     required this.controller,
+    required this.hintText,
+    required this.onSubmitted,
   });
 
   @override
   Widget build(BuildContext context) {
     final inputBorder =
         OutlineInputBorder(borderSide: Divider.createBorderSide(context));
+
     return Row(
       children: [
         Expanded(
           child: TextField(
             controller: controller,
             decoration: InputDecoration(
-              hintText: '원하는 것을 입력하세요',
+              hintText: hintText,
               border: inputBorder,
-              focusedBorder: inputBorder,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1,
+                ),
+              ),
               enabledBorder: inputBorder,
               filled: true,
               contentPadding: const EdgeInsets.only(
@@ -28,12 +39,18 @@ class FullRowTextField extends StatelessWidget {
                 top: 8,
                 bottom: 8,
               ),
+              fillColor: Theme.of(context).colorScheme.surface,
             ),
             keyboardType: TextInputType.text,
+            onSubmitted: (value) {
+              if (value.isNotEmpty) {
+                onSubmitted(value);
+                controller.clear();
+              }
+            },
             // obscureText: true,
           ),
         ),
-        const SizedBox(width: 8),
       ],
     );
   }

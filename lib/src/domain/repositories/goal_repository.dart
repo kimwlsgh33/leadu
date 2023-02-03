@@ -4,8 +4,20 @@ import 'package:leadu/src/domain/entities/goal.dart';
 class GoalRepository {
   static final GoalProvider _goalProvider = GoalProvider();
 
-  static Future<List<Goal>> getGoals() async {
-    return await _goalProvider.getGoals();
+  static Future<void> deleteDatabase() async {
+    await _goalProvider.deleteDatabase();
+  }
+
+  static Future<List<Goal>> getAll() async {
+    return await _goalProvider.getAll();
+  }
+
+  static Future<List<Goal>> getRoots() async {
+    return await _goalProvider.getRoots();
+  }
+
+  static Future<List<Goal>> getChildren(parentId) async {
+    return await _goalProvider.getChildren(parentId);
   }
 
   static Future<Goal> getGoal(Goal goal) async {

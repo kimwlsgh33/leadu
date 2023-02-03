@@ -12,19 +12,13 @@ showSnackBar(BuildContext context, String message) {
   );
 }
 
-Widget addVerticalSpace(double height) {
-  return SizedBox(
-    height: height,
-  );
-}
-
-Widget addHorizontalSpace(double width) {
-  return SizedBox(
-    width: width,
-  );
-}
-
 String makeUUID() => const Uuid().v4();
 
 double randomValue() =>
     (100 * (1 + (Random().nextDouble() * 100))).roundToDouble();
+
+Widget smallVerticalSpace() => const SizedBox(height: 8);
+Widget smallHorizontalSpace() => const SizedBox(width: 8);
+
+Widget mediumVerticalSpace() => const SizedBox(height: 16);
+Widget mediumHorizontalSpace() => const SizedBox(width: 16);

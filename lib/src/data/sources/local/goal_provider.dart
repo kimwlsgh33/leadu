@@ -1,6 +1,7 @@
 import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqflite_dev.dart';
 import '../../../domain/entities/goal.dart';
 
 class GoalProvider {
@@ -23,6 +24,7 @@ class GoalProvider {
     await db.execute('''
       CREATE TABLE $tableGoal (
         $columnId TEXT PRIMARY KEY,
+        $columnParentId TEXT NOT NULL DEFAULT 'root',
         $columnContent TEXT NOT NULL,
         $columnGoalDate INTEGER NOT NULL,
         $columnPriority INTEGER NOT NULL DEFAULT 99,
@@ -38,27 +40,14 @@ class GoalProvider {
     return _database!;
   }
 
+  Future<void> deleteDatabase() async {
+    String path = join(await getDatabasesPath(), 'goal.db');
+    await sqfliteDatabaseFactoryDefault.deleteDatabase(path);
+  }
+
   Future<void> insert(Goal goal) async {
     final db = await database;
     await db.insert('goal', goal.toMap());
-  }
-
-  Future<List<Goal>> getGoals() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('goal');
-
-    _logger.d(maps);
-  
-    return List.generate(maps.length, (i) {
-      var goalDate = DateTime.fromMillisecondsSinceEpoch(maps[i][columnGoalDate]);
-      return Goal(
-        id: maps[i][columnId],
-        content: maps[i][columnContent],
-        goalDate: goalDate,
-        priority: maps[i][columnPriority],
-        done: maps[i][columnDone] == 1,
-      );
-    });
   }
 
   Future<Goal> getGoal(Goal goal) async {
@@ -67,6 +56,7 @@ class GoalProvider {
         await db.query('goal', where: '$columnId = ?', whereArgs: [goal.getId]);
     return Goal(
       id: maps[0][columnId],
+      parentId: maps[0][columnParentId],
       content: maps[0][columnContent],
       goalDate: maps[0][columnGoalDate],
       priority: maps[0][columnPriority],
@@ -96,5 +86,68 @@ class GoalProvider {
   Future<void> removeAll() async {
     final db = await database;
     await db.delete('goal');
+  }
+
+  Future<List<Goal>> getAll() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.query('goal', orderBy: '$columnPriority ASC');
+
+    return List.generate(maps.length, (i) {
+      var goalDate = int.parse(maps[i][columnPriority].toString());
+      // _logger.i('goalDate: $goalDate');
+      return Goal(
+        id: maps[i][columnId],
+        parentId: maps[i][columnParentId],
+        content: maps[i][columnContent],
+        goalDate: DateTime.fromMillisecondsSinceEpoch(goalDate),
+        priority: maps[i][columnPriority],
+        done: maps[i][columnDone] == 1,
+      );
+    });
+  }
+
+  Future<List<Goal>> getRoots({bool done = false}) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'goal',
+      where: '$columnParentId = ? AND $columnDone = ?',
+      whereArgs: ['root', done ? 1 : 0],
+      orderBy: '$columnPriority ASC',
+    );
+
+    return List.generate(maps.length, (i) {
+      var goalDate = int.parse(maps[i][columnPriority].toString());
+      return Goal(
+        id: maps[i][columnId],
+        parentId: maps[i][columnParentId],
+        content: maps[i][columnContent],
+        goalDate: DateTime.fromMillisecondsSinceEpoch(goalDate),
+        priority: maps[i][columnPriority],
+        done: maps[i][columnDone] == 1,
+      );
+    });
+  }
+
+  Future<List<Goal>> getChildren(parentId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'goal',
+      where: '$columnParentId = ? AND $columnDone = ?',
+      whereArgs: [parentId, 0],
+      orderBy: '$columnPriority ASC',
+    );
+
+    return List.generate(maps.length, (i) {
+      var goalDate = int.parse(maps[i][columnPriority].toString());
+      return Goal(
+        id: maps[i][columnId],
+        parentId: maps[i][columnParentId],
+        content: maps[i][columnContent],
+        goalDate: DateTime.fromMillisecondsSinceEpoch(goalDate),
+        priority: maps[i][columnPriority],
+        done: maps[i][columnDone] == 1,
+      );
+    });
   }
 }
