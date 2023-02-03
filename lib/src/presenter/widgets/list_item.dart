@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/presenter/views/goals/components/answer_card.dart';
 import 'package:leadu/src/presenter/widgets/error_container.dart';
 import 'package:leadu/src/presenter/widgets/success_container.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/domain/entities/todo.dart';
 
@@ -92,13 +93,43 @@ class ListItem extends StatelessWidget {
       sizeFactor: animation,
       child: Column(
         children: [
-          Container(
-            color: Colors.blue,
-            child: ListTile(
-              title: Text(todo.title),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: onPressed,
+          Slidable(
+            key: ValueKey(todo.id),
+            startActionPane: ActionPane(
+              motion: const ScrollMotion(),
+              extentRatio: 0.25,
+              dismissible: DismissiblePane(onDismissed: () {}),
+              children: [
+                SlidableAction(
+                  label: 'Archive',
+                  icon: Icons.archive,
+                  onPressed: (_) {},
+                ),
+                SlidableAction(
+                  label: 'Share',
+                  icon: Icons.share,
+                  onPressed: (_) {},
+                ),
+              ],
+            ),
+            endActionPane: ActionPane(
+              motion: const ScrollMotion(),
+              extentRatio: 0.25,
+              dismissible: DismissiblePane(onDismissed: () {}),
+              children: [
+                SlidableAction(
+                  label: 'Delete',
+                  icon: Icons.delete,
+                  onPressed: (_) {
+                    onPressed();
+                  },
+                ),
+              ],
+            ),
+            child: Container(
+              color: Colors.blue,
+              child: ListTile(
+                title: Text(todo.title),
               ),
             ),
           ),

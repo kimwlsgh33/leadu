@@ -16,7 +16,7 @@ class GoalEditScreen extends StatefulWidget {
 }
 
 class _GoalEditScreenState extends State<GoalEditScreen> {
-  late TextEditingController _textController; 
+  late TextEditingController _textController;
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class _GoalEditScreenState extends State<GoalEditScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-
             Text(widget.goal.content),
             smallVerticalSpace(),
             FullRowTextField(
