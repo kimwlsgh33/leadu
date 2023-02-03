@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/widgets/full_textfield.dart';
 import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';

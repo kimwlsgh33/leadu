@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:leadu/src/base/utils.dart';
+import 'package:leadu/src/config/routes/getx_routes.dart';
 import 'package:leadu/src/config/routes/routes.dart';
-import '../../../../domain/entities/goal.dart';
+import 'package:leadu/src/presenter/views/goals/goal_edit_screen.dart';
+import '../../../../model/entities/goal.dart';
 
 class AnswerCard extends StatelessWidget {
   final Function()? onRemove;
@@ -49,10 +52,15 @@ class AnswerCard extends StatelessWidget {
               shape: const CircleBorder(),
               clipBehavior: Clip.hardEdge,
               child: InkWell(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  AppRouter.goalEdit,
-                  arguments: goal,
+                // onTap: () => Get.toNamed(
+                //   GetRouter.goalEdit,
+                //   arguments: goal,
+                // ),
+                onTap: () => Get.to(
+                  () => GoalEditScreen(
+                    goal: goal,
+                  ),
+                  transition: Transition.circularReveal,
                 ),
                 child: Container(
                   padding: const EdgeInsets.all(8),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadu/src/base/utils.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/widgets/full_textfield.dart';
 
 class GoalEditScreen extends StatefulWidget {

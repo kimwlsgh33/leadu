@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/views/goals/goal_detail_screen.dart';
 import 'package:leadu/src/presenter/views/goals/goal_edit_screen.dart';
@@ -65,28 +65,6 @@ class AppRouter {
                 begin: const Offset(1, 0),
                 end: Offset.zero,
               ).animate(animation),
-              child: child,
-            );
-          },
-        );
-      case goalEdit:
-        return PageRouteBuilder(
-          pageBuilder: (_, __, ___) {
-            final goal = settings.arguments as Goal;
-
-            // return GoalDetailScreen(goal: goal);
-            return BlocProvider.value(
-              value: _goalBloc,
-              child: GoalEditScreen(goal: goal),
-            );
-          },
-          transitionsBuilder: (_, animation, __, child) {
-            return FadeTransition(
-              opacity: animation.drive(
-                Tween<double>(begin: 0.0, end: 1.0).chain(
-                  CurveTween(curve: Curves.easeIn),
-                ),
-              ),
               child: child,
             );
           },

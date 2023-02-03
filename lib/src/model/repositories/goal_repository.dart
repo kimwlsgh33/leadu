@@ -1,5 +1,5 @@
 import 'package:leadu/src/data/sources/local/goal_provider.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 
 class GoalRepository {
   static final GoalProvider _goalProvider = GoalProvider();

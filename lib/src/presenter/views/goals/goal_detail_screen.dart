@@ -6,7 +6,7 @@ import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
 import 'package:leadu/src/presenter/widgets/success_container.dart';
 import '../../widgets/full_textfield.dart';
 import 'package:leadu/src/base/utils.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/views/goals/components/answer_card.dart';
 

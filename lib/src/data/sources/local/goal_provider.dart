@@ -2,7 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite_dev.dart';
-import '../../../domain/entities/goal.dart';
+import '../../../model/entities/goal.dart';
 
 class GoalProvider {
   static final Logger _logger = Logger();

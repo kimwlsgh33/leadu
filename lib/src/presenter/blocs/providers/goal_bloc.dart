@@ -2,8 +2,8 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leadu/src/base/utils.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
-import 'package:leadu/src/domain/repositories/goal_repository.dart';
+import 'package:leadu/src/model/entities/goal.dart';
+import 'package:leadu/src/model/repositories/goal_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class GoalEvent {}

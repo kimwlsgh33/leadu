@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:leadu/src/domain/entities/todo.dart';
+import 'package:leadu/src/model/entities/todo.dart';
 import 'package:http/http.dart' as http;
 
 const String _baseUrl = 'https://jsonplaceholder.typicode.com/todos';

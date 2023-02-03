@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadu/src/base/constant.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 
 class GoalCard extends StatelessWidget {
   Goal goal;
@@ -44,7 +44,6 @@ class GoalCard extends StatelessWidget {
             // trailing: const Icon(Icons.arrow_forward_ios),
           ),
         ),
-        
       ],
     );
   }

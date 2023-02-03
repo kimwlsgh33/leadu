@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:leadu/src/domain/entities/goal.dart';
+import 'package:get/get.dart';
+import 'package:leadu/src/config/routes/getx_routes.dart';
+import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/presenter/views/goals/components/answer_card.dart';
 import 'package:leadu/src/presenter/widgets/error_container.dart';
@@ -63,13 +67,10 @@ class ListItem extends StatelessWidget {
         tag: goal.id,
         child: AnswerCard(
           goal: goal,
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              '/goal_detail',
-              arguments: goal,
-            );
-          },
+          onPressed: () => Get.toNamed(
+            GetRouter.goalDetail,
+            parameters: {"goal": jsonEncode(goal.toMap())},
+          ),
           onRemove: onRemove,
         ),
       ),
