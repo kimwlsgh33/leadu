@@ -97,7 +97,7 @@ class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
       goalDate: DateTime.now(),
     );
     GoalRepository.insert(goal);
-    emit([...state, goal]);
+    emit([goal, ...state]);
   }
 
   void _removeGoal(event, emit) {
