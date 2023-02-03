@@ -37,7 +37,7 @@ class AnswerCard extends StatelessWidget {
               child: InkWell(
                 onTap: () => Navigator.pushNamed(
                   context,
-                  AppRouter.goalDetail,
+                  AppRouter.goalEdit,
                   arguments: goal,
                 ),
                 child: Container(

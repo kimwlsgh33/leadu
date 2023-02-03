@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leadu/src/base/utils.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:leadu/src/domain/entities/goal.dart';
 import 'package:leadu/src/presenter/views/goals/components/answer_card.dart';
-import 'package:leadu/src/presenter/widgets/error_container.dart';
-import 'package:leadu/src/presenter/widgets/success_container.dart';
 
 class ListItem extends StatelessWidget {
   const ListItem({
@@ -28,49 +26,48 @@ class ListItem extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 2,
-        child: Dismissible(
-          key: Key(goal.id),
-          background: const SuccessContainer(),
-          secondaryBackground: const ErrorContainer(),
-          onDismissed: (direction) {
-            if (direction == DismissDirection.endToStart) {
-              // logic for delete
-              onRemove();
-              showSnackBar(context, "목표가 삭제되었습니다.");
-            } else {
-              onCompleted();
-              showSnackBar(context, "목표가 완료되었습니다.");
-            }
-          },
-          confirmDismiss: (direction) {
-            if (direction == DismissDirection.endToStart) {
-              return showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("삭제하시겠습니까?"),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                        child: const Text("삭제"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.pop(context, false),
-                        child: const Text("취소"),
-                      ),
-                    ],
-                  );
-                },
-              );
-            } else {
-              return Future.value(true);
-            }
-          },
-          child: SizeTransition(
-            sizeFactor: animation,
+        // elevation: 2,
+        child: SizeTransition(
+          sizeFactor: animation,
+          child: Slidable(
+            key: ValueKey(goal.id),
+            startActionPane: ActionPane(
+              motion: const ScrollMotion(),
+              dragDismissible: false,
+              extentRatio: 0.3,
+              children: [
+                SlidableAction(
+                  icon: Icons.check_circle_rounded,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
+                  onPressed: (_) {
+                    onCompleted();
+                  },
+                ),
+                SlidableAction(
+                  icon: Icons.share,
+                  backgroundColor: Colors.lightGreen,
+                  foregroundColor: Colors.white,
+                  onPressed: (_) {},
+                ),
+              ],
+            ),
+            endActionPane: ActionPane(
+              motion: const ScrollMotion(),
+              dragDismissible: false,
+              extentRatio: 0.15,
+              children: [
+                SlidableAction(
+                  icon: Icons.delete,
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.all(0),
+                  onPressed: (_) {
+                    onRemove();
+                  },
+                ),
+              ],
+            ),
             child: Hero(
               tag: goal.id,
               child: AnswerCard(

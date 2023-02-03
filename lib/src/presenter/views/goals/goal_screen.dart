@@ -67,9 +67,10 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
             Expanded(
               child: BlocBuilder<GoalBloc, List<Goal>>(
                   builder: (BuildContext context, List<Goal> goals) {
-                var roots = goals
-                    .where((element) => element.parentId == "root")
-                    .toList();
+                // var roots = goals
+                //     .where((element) => element.parentId == "root")
+                //     .toList();
+                var roots = goals;
 
                 if (roots.isEmpty) {
                   return const SizedBox(
