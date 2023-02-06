@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class CircleInput extends StatelessWidget {
   const CircleInput({
     super.key,
-    required this.textController,
+    required this.controller,
     required this.onSubmitted,
     this.hintText = '',
   });
 
-  final TextEditingController textController;
+  final TextEditingController controller;
   final Function(String) onSubmitted;
   final String hintText;
 
@@ -19,7 +19,7 @@ class CircleInput extends StatelessWidget {
       height: 100,
       width: 70,
       child: TextField(
-        controller: textController,
+        controller: controller,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Theme.of(context).colorScheme.primary,

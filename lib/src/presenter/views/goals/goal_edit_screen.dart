@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
-import 'package:leadu/src/presenter/widgets/circle_input.dart';
-import 'package:leadu/src/presenter/widgets/full_textfield.dart';
+import 'package:leadu/src/presenter/widgets/typing_card.dart';
 
 class GoalEditScreen extends StatefulWidget {
   const GoalEditScreen({
@@ -54,8 +54,19 @@ class _GoalEditScreenState extends State<GoalEditScreen> {
               builder: (context, goal) {
                 return TextButton(
                   onPressed: () {
-                    context.read<GoalBloc>().add(EditGoal(goal));
-                    Navigator.of(context).pop(widget.goal);
+                    context.read<GoalBloc>().add(EditGoal(goal.copyWith(
+                          content: _textController.text,
+                          priority: int.parse(_priorityController.text),
+                        )));
+                    Get.toNamed('/goal');
+                    Get.snackbar(
+                      '수정 완료',
+                      '수정이 완료되었습니다',
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                      duration: const Duration(seconds: 2),
+                    );
                   },
                   child: const Text('확인'),
                 );
@@ -65,34 +76,64 @@ class _GoalEditScreenState extends State<GoalEditScreen> {
     );
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('목표 수정'),
+        title: const TypingCard(
+          text: "목표를 수정해보세요",
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleInput(
-              textController: _priorityController,
-              onSubmitted: (value) {},
-              hintText: '우선순위',
-            ),
-            smallVerticalSpace(),
-            FullRowTextField(
-              controller: _textController,
-              hintText: '수정할 계획을 입력해주세요',
-              onSubmitted: (value) {},
-              border: const OutlineInputBorder(),
-            ),
-          ],
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Text(widget.goal.content),
+              smallVerticalSpace(),
+              Text(widget.goal.priority.toString()),
+              smallVerticalSpace(),
+              TextFormField(
+                controller: _textController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return '목표를 입력해주세요';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '목표',
+                ),
+              ),
+              mediumVerticalSpace(),
+              TextFormField(
+                controller: _priorityController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return '우선순위를 입력해주세요';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '우선순위',
+                ),
+                keyboardType: TextInputType.number,
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            _onSubmitted();
+          }
+        },
         child: const Icon(Icons.check),
       ),
     );

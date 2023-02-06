@@ -19,7 +19,7 @@ class Goal {
     this.parentId = 'root',
     required this.content,
     required this.goalDate,
-    this.priority = 999,
+    this.priority = 99,
     this.done = false,
   });
 

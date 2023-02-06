@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leadu/src/base/utils.dart';
-import 'package:leadu/src/config/routes/getx_routes.dart';
-import 'package:leadu/src/config/routes/routes.dart';
 import 'package:leadu/src/presenter/views/goals/goal_edit_screen.dart';
 import '../../../../model/entities/goal.dart';
 
@@ -63,7 +61,9 @@ class AnswerCard extends StatelessWidget {
                   transition: Transition.circularReveal,
                 ),
                 child: Container(
-                  padding: const EdgeInsets.all(8),
+                  width: 35,
+                  height: 35,
+                  alignment: Alignment.center,
                   decoration: onPressed != null
                       ? BoxDecoration(
                           borderRadius: BorderRadius.circular(30),

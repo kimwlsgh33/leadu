@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 const _cardRadius = 8.0;
 
-class QuestCard extends StatelessWidget {
-  final String quest;
-  final IconData icon;
+class TypingCard extends StatelessWidget {
+  final String text;
+  final IconData? icon;
 
-  const QuestCard({
+  const TypingCard({
     super.key,
-    required this.quest,
-    required this.icon,
+    required this.text,
+    this.icon,
   });
 
   @override
@@ -27,16 +27,17 @@ class QuestCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(
-                icon,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
+            if (icon != null)
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 40,
+                  )),
             AnimatedTextKit(animatedTexts: [
               TypewriterAnimatedText(
-                quest,
+                text,
                 textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                       fontWeight: FontWeight.bold,

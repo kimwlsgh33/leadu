@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +8,6 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart' as trans;
 // import 'package:logger/logger.dart';
 import 'package:leadu/src/config/routes/getx_routes.dart';
 import 'package:leadu/src/config/theme.dart';
-import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/observer.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/blocs/providers/theme_bloc.dart';
@@ -55,12 +53,15 @@ class _MyAppState extends State<MyApp> {
         getPages: [
           GetPage(name: GetRouter.home, page: () => const MainScreen()),
           GetPage(
-            name: GetRouter.goalDetail,
+            name: "${GetRouter.goalDetail}/:id",
             page: () {
-              var decode = jsonDecode(Get.parameters['goal']!);
-              final goal = Goal.fromMap(decode);
-              return GoalDetailScreen(goal: goal);
+              return GoalDetailScreen(goal: Get.arguments);
             },
+            // page: () {
+            //   var decode = jsonDecode(Get.parameters['goal']!);
+            //   final goal = Goal.fromMap(decode);
+            //   return GoalDetailScreen(goal: goal);
+            // },
             transition: trans.Transition.fade,
             transitionDuration: const Duration(milliseconds: 500),
           ),

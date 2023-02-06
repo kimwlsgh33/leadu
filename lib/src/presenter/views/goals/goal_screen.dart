@@ -5,7 +5,7 @@ import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/widgets/full_textfield.dart';
 import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
 import 'package:leadu/src/presenter/widgets/list_item.dart';
-import 'package:leadu/src/presenter/widgets/quest_card.dart';
+import 'package:leadu/src/presenter/widgets/typing_card.dart';
 import '../../../base/utils.dart';
 
 class GoalScreen extends StatefulWidget {
@@ -17,7 +17,6 @@ class GoalScreen extends StatefulWidget {
 
 class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
   final TextEditingController _textController = TextEditingController();
-  final _listKey = GlobalKey<AnimatedListState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +35,8 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  const QuestCard(
-                    quest: '만약 어떤 목표라도 성취할수있는\n 능력을 가지고 있다면?',
+                  const TypingCard(
+                    text: '만약 어떤 목표라도 성취할수있는\n 능력을 가지고 있다면?',
                     icon: Icons.where_to_vote_rounded,
                   ),
                   smallVerticalSpace(),
@@ -75,7 +74,6 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
                 }
 
                 return ListView.separated(
-                  key: _listKey,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: roots.length,
                   itemBuilder: (context, index) => ListItem(

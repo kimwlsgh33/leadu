@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/model/repositories/goal_repository.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class GoalEvent {}
@@ -52,11 +53,17 @@ EventTransformer<T> debounceTime<T>(Duration duration) {
 }
 
 //============================================================
+// Bloc State
+//============================================================
+class GoalState {}
+
+//============================================================
 // Bloc 객체
 //============================================================
 class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
   late List<Goal> _goals;
   get goals => _goals;
+  Logger logger = Logger();
 
   GoalBloc() : super(<Goal>[]) {
     on<InitGoal>(_onInitGoal);
@@ -78,18 +85,16 @@ class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
       GoalRepository.deleteDatabase();
     });
   }
-
   //================================================================
   // Bloc에 전달된 Event를 처리하는 함수
   //================================================================
   void _onInitGoal(InitGoal event, Emitter<List<Goal>> emit) async {
     if (state.isEmpty) {
-      _goals = await GoalRepository.getNotCompleted();
-      emit(_goals);
+      emit(await GoalRepository.getNotCompleted());
     }
   }
 
-  void _addGoal(event, emit) {
+  void _addGoal(AddGoal event, Emitter<List<Goal>> emit) {
     var goal = Goal(
       id: makeUUID(),
       parentId: event.parentId,
@@ -100,26 +105,26 @@ class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
     emit([goal, ...state]);
   }
 
-  void _removeGoal(event, emit) {
+  void _removeGoal(RemoveGoal event, Emitter<List<Goal>> emit) {
     GoalRepository.remove(event.goal);
     emit(state.where((element) => element != event.goal).toList());
   }
 
-  void _completeGoal(event, emit) {
+  void _completeGoal(CompleteGoal event, Emitter<List<Goal>> emit) {
     var goal = event.goal.copyWith(done: true);
     GoalRepository.update(goal);
-    emit(state.where((element) => element != event.goal).toList());
   }
 
-  void _editGoal(event, emit) {
+  void _editGoal(EditGoal event, Emitter<List<Goal>> emit) {
+    // type mismatch => not update ui
     GoalRepository.update(event.goal);
-    emit(state);
+    emit(state.map((e) => e.id == event.goal.id ? event.goal : e).toList());
   }
 
   //================================================================
   // dev
   //================================================================
-  void _clearGoal(event, emit) {
+  void _clearGoal(ClearGoal event, Emitter<List<Goal>> emit) {
     showDialog(
       context: event.context,
       builder: (context) => AlertDialog(

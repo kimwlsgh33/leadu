@@ -20,7 +20,7 @@ class FullIconButton extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       shape: const CircleBorder(),
       child: InkWell(
-        splashColor: Theme.of(context).colorScheme.primary,
+        splashColor: Colors.red,
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(

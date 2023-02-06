@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:leadu/src/config/routes/routes.dart';
+import 'package:get/get.dart';
+//==============================================================================
+import 'package:leadu/src/config/routes/getx_routes.dart';
 import 'package:leadu/src/presenter/widgets/error_container.dart';
 import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
 import 'package:leadu/src/presenter/widgets/success_container.dart';
+import 'package:leadu/src/presenter/widgets/typing_card.dart';
 import '../../widgets/full_textfield.dart';
 import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/model/entities/goal.dart';
@@ -37,11 +40,15 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '어떻게?',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const TypingCard(text: '어떻게?'),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.backspace_rounded),
+            onPressed: () => Get.offAllNamed(GetRouter.home),
+            tooltip: '목표 목록으로 돌아가기',
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -86,7 +93,7 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: children.length,
         itemBuilder: (context, index) => Dismissible(
-          key: Key(children[index].id),
+          key: ValueKey(children[index].id),
           background: const SuccessContainer(),
           secondaryBackground: const ErrorContainer(),
           onDismissed: (direction) {
@@ -100,13 +107,10 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
             tag: children[index].id,
             child: AnswerCard(
               goal: children[index],
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  AppRouter.goalDetail,
-                  arguments: children[index],
-                );
-              },
+              onPressed: () => Get.toNamed(
+                "${GetRouter.goalDetail}/id=${children[index].id}",
+                arguments: children[index],
+              ),
             ),
           ),
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leadu/src/data/sources/remote/todo_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:leadu/src/model/entities/goal.dart';
+import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 
 class TomorrowScreen extends StatelessWidget {
   const TomorrowScreen({super.key});
@@ -8,24 +10,15 @@ class TomorrowScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Today'),
+        title: const Text('Tomorrow'),
       ),
-      body: StreamBuilder(
-          stream: TodoProvider().fetchTodosStream(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index].title),
-                  );
-                },
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          }),
+      body: BlocBuilder<GoalBloc, List<Goal>>(builder: (context, state) {
+        return ListView.separated(
+          itemCount: state.length,
+          itemBuilder: (context, item) {},
+          separatorBuilder: (context, item) => const Divider(),
+        );
+      }),
     );
   }
 }
