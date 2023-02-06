@@ -6,9 +6,7 @@ import 'package:leadu/src/presenter/widgets/full_textfield.dart';
 import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
 import 'package:leadu/src/presenter/widgets/list_item.dart';
 import 'package:leadu/src/presenter/widgets/quest_card.dart';
-
 import '../../../base/utils.dart';
-// import '../../../base/constant.dart';
 
 class GoalScreen extends StatefulWidget {
   const GoalScreen({super.key});
@@ -26,9 +24,7 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
     // init goalBloc
     context.read<GoalBloc>().add(InitGoal());
 
-    void onAdd(value) {
-      context.read<GoalBloc>().add(AddGoal(value));
-    }
+    void onAdd(value) => context.read<GoalBloc>().add(AddGoal(value));
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

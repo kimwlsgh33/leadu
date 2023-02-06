@@ -34,14 +34,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // final AppRouter _appRouter = AppRouter();
-  // final GetRouter _getRouter = GetRouter();
-
-  // @override
-  // void dispose() {
-  //   _appRouter.dispose();
-  //   super.dispose();
-  // }
   // final _logger = Logger();
 
   @override
