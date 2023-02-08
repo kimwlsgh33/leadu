@@ -58,7 +58,8 @@ class _GoalEditScreenState extends State<GoalEditScreen> {
                           content: _textController.text,
                           priority: int.parse(_priorityController.text),
                         )));
-                    Get.toNamed('/goal');
+                    Get.back();
+                    Get.back();
                     Get.snackbar(
                       '수정 완료',
                       '수정이 완료되었습니다',
@@ -131,7 +132,12 @@ class _GoalEditScreenState extends State<GoalEditScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            _onSubmitted();
+            if (widget.goal.content != _textController.text ||
+                widget.goal.priority != int.parse(_priorityController.text)) {
+              _onSubmitted();
+            } else {
+              Get.back();
+            }
           }
         },
         child: const Icon(Icons.check),

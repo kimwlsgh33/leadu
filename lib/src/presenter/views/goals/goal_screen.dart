@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leadu/src/model/entities/goal.dart';
+import 'package:leadu/src/model/repositories/goal_repository.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/widgets/full_textfield.dart';
 import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
 import 'package:leadu/src/presenter/widgets/list_item.dart';
 import 'package:leadu/src/presenter/widgets/typing_card.dart';
+
 import '../../../base/utils.dart';
 
 class GoalScreen extends StatefulWidget {
@@ -58,43 +60,13 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
               ),
             ),
             // const GoalList(),
-            Expanded(
-              child: BlocBuilder<GoalBloc, List<Goal>>(
-                  builder: (BuildContext context, List<Goal> goals) {
-                var roots = goals
-                    .where((element) => element.parentId == "root")
-                    .toList();
-                // var roots = goals;
-
-                if (roots.isEmpty) {
-                  return const SizedBox(
-                    height: 100,
-                    child: Text("목표가 없습니다."),
-                  );
-                }
-
-                return ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: roots.length,
-                  itemBuilder: (context, index) => ListItem(
-                    key: ValueKey(roots[index].id),
-                    goal: roots[index],
-                    onRemove: () =>
-                        context.read<GoalBloc>().add(RemoveGoal(roots[index])),
-                    onCompleted: () => context
-                        .read<GoalBloc>()
-                        .add(CompleteGoal(roots[index])),
-                  ),
-                  separatorBuilder: (context, index) => smallVerticalSpace(),
-                );
-              }),
-            ),
+            BlocBuilder<GoalBloc, List<Goal>>(builder: goalListBuilder),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // context.read<GoalBloc>().add(());
+          GoalRepository.deleteDatabase();
         },
         child: const Icon(Icons.close),
       ),
@@ -105,5 +77,22 @@ class _GoalScreenState extends State<GoalScreen> with TickerProviderStateMixin {
   void dispose() {
     _textController.dispose();
     super.dispose();
+  }
+
+  Widget goalListBuilder(BuildContext context, List<Goal> goals) {
+    var roots = goals.where((element) => element.parentId == "root").toList();
+
+    return Expanded(
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: roots.length,
+        itemBuilder: (context, index) => ListItem(
+          key: ValueKey(roots[index].id),
+          goal: roots[index],
+          index: index,
+        ),
+        separatorBuilder: (context, index) => smallVerticalSpace(),
+      ),
+    );
   }
 }

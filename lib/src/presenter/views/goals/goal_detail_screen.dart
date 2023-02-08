@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:leadu/src/base/utils.dart';
 //==============================================================================
 import 'package:leadu/src/config/routes/getx_routes.dart';
-import 'package:leadu/src/presenter/widgets/error_container.dart';
-import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
-import 'package:leadu/src/presenter/widgets/success_container.dart';
-import 'package:leadu/src/presenter/widgets/typing_card.dart';
-import '../../widgets/full_textfield.dart';
-import 'package:leadu/src/base/utils.dart';
 import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/views/goals/components/answer_card.dart';
+import 'package:leadu/src/presenter/widgets/error_container.dart';
+import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
+import 'package:leadu/src/presenter/widgets/list_item.dart';
+import 'package:leadu/src/presenter/widgets/success_container.dart';
+import 'package:leadu/src/presenter/widgets/typing_card.dart';
+
+import '../../widgets/full_textfield.dart';
 
 class GoalDetailScreen extends StatefulWidget {
-  Goal goal;
-  GoalDetailScreen({
+  final Goal goal;
+
+  const GoalDetailScreen({
     super.key,
     required this.goal,
   });
@@ -26,12 +29,6 @@ class GoalDetailScreen extends StatefulWidget {
 
 class _GoalDetailScreenState extends State<GoalDetailScreen> {
   final TextEditingController _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +54,7 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
             child: Column(
               children: [
                 Hero(
-                  tag: widget.goal.id,
+                  tag: UniqueKey(),
                   child: AnswerCard(goal: widget.goal, isDetail: true),
                 ),
                 smallVerticalSpace(),
@@ -84,36 +81,21 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget goalListBuilder(BuildContext context, List<Goal> goals) {
-    List<Goal> children =
-        goals.where((e) => e.parentId == widget.goal.id).toList();
+    var children = goals.where((e) => e.parentId == widget.goal.id).toList();
 
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: children.length,
-        itemBuilder: (context, index) => Dismissible(
-          key: ValueKey(children[index].id),
-          background: const SuccessContainer(),
-          secondaryBackground: const ErrorContainer(),
-          onDismissed: (direction) {
-            if (direction == DismissDirection.endToStart) {
-              context.read<GoalBloc>().add(RemoveGoal(children[index]));
-            } else {
-              context.read<GoalBloc>().add(CompleteGoal(children[index]));
-            }
-          },
-          child: Hero(
-            tag: children[index].id,
-            child: AnswerCard(
-              goal: children[index],
-              onPressed: () => Get.toNamed(
-                "${GetRouter.goalDetail}/id=${children[index].id}",
-                arguments: children[index],
-              ),
-            ),
-          ),
-        ),
+        itemBuilder: (context, index) =>
+            ListItem(goal: children[index], index: index),
         separatorBuilder: (context, index) => smallVerticalSpace(),
       ),
     );

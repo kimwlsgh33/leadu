@@ -107,12 +107,12 @@ class GoalProvider {
     });
   }
 
-  Future<List<Goal>> getNotCompleted() async {
+  Future<List<Goal>> getCompleted(bool not) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       'goal',
       where: '$columnDone = ?',
-      whereArgs: [0],
+      whereArgs: [not ? 0 : 1],
       orderBy: '$columnPriority ASC',
     );
 

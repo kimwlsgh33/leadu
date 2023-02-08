@@ -22,3 +22,7 @@ Widget smallHorizontalSpace() => const SizedBox(width: 8);
 
 Widget mediumVerticalSpace() => const SizedBox(height: 16);
 Widget mediumHorizontalSpace() => const SizedBox(width: 16);
+Widget noGoalWidget() => const SizedBox(
+      height: 100,
+      child: Text("목표가 없습니다."),
+    );

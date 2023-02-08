@@ -12,8 +12,8 @@ class GoalRepository {
     return await _goalProvider.getAll();
   }
 
-  static Future<List<Goal>> getNotCompleted() async {
-    return await _goalProvider.getNotCompleted();
+  static Future<List<Goal>> getCompleted(bool not) async {
+    return await _goalProvider.getCompleted(not);
   }
 
   static Future<List<Goal>> getRoots() async {

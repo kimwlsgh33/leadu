@@ -51,17 +51,16 @@ class _MyAppState extends State<MyApp> {
         theme: msLightTheme,
         darkTheme: msDarkTheme,
         getPages: [
-          GetPage(name: GetRouter.home, page: () => const MainScreen()),
+          GetPage(
+            name: GetRouter.home,
+            page: () => const MainScreen(),
+            transition: trans.Transition.fade,
+          ),
           GetPage(
             name: "${GetRouter.goalDetail}/:id",
             page: () {
               return GoalDetailScreen(goal: Get.arguments);
             },
-            // page: () {
-            //   var decode = jsonDecode(Get.parameters['goal']!);
-            //   final goal = Goal.fromMap(decode);
-            //   return GoalDetailScreen(goal: goal);
-            // },
             transition: trans.Transition.fade,
             transitionDuration: const Duration(milliseconds: 500),
           ),

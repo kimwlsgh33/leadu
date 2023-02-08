@@ -90,7 +90,8 @@ class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
   //================================================================
   void _onInitGoal(InitGoal event, Emitter<List<Goal>> emit) async {
     if (state.isEmpty) {
-      emit(await GoalRepository.getNotCompleted());
+      // emit(await GoalRepository.getCompleted(true));
+      emit(await GoalRepository.getAll());
     }
   }
 
@@ -118,7 +119,15 @@ class GoalBloc extends Bloc<GoalEvent, List<Goal>> {
   void _editGoal(EditGoal event, Emitter<List<Goal>> emit) {
     // type mismatch => not update ui
     GoalRepository.update(event.goal);
-    emit(state.map((e) => e.id == event.goal.id ? event.goal : e).toList());
+    _goals = state.map((e) {
+      if (e.id == event.goal.id) {
+        return event.goal;
+      } else {
+        return e;
+      }
+    }).toList();
+    _goals.sort((a, b) => a.goalDate.compareTo(b.goalDate));
+    emit([..._goals]);
   }
 
   //================================================================
