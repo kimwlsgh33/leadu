@@ -45,35 +45,38 @@ class ListItem extends StatelessWidget {
         },
         confirmDismiss: (direction) {
           if (direction == DismissDirection.endToStart) {
-            return Get.dialog(AlertDialog(
-              title: const Text("삭제하시겠습니까?"),
-              content: const Text("하위 목표까지 모두 삭제됩니다."),
-              actions: [
-                ElevatedButton(
-                  onPressed: () => Get.back(),
-                  child: const Text("삭제"),
-                ),
-                ElevatedButton(
-                  onPressed: () => Get.back(),
-                  child: const Text("취소"),
-                ),
-              ],
-            ));
+            return showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: const Text("삭제하시겠습니까?"),
+                      content: const Text("하위 목표까지 모두 삭제됩니다."),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: const Text("삭제"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: const Text("취소"),
+                        ),
+                      ],
+                    ));
           } else {
             if (goals
                 .where((element) => element.parentId == goal.id)
                 .isNotEmpty) {
-              return Get.dialog(
-                AlertDialog(
+              return showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
                   title: const Text("하위 목표가 존재합니다."),
                   content: const Text("정말 달성하셨나요?"),
                   actions: [
                     ElevatedButton(
-                      onPressed: () => Get.back(),
+                      onPressed: () => Navigator.of(context).pop(true),
                       child: const Text("달성"),
                     ),
                     ElevatedButton(
-                      onPressed: () => Get.back(),
+                      onPressed: () => Navigator.of(context).pop(false),
                       child: const Text("취소"),
                     ),
                   ],

@@ -7,10 +7,8 @@ import 'package:leadu/src/config/routes/getx_routes.dart';
 import 'package:leadu/src/model/entities/goal.dart';
 import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/views/goals/components/answer_card.dart';
-import 'package:leadu/src/presenter/widgets/error_container.dart';
 import 'package:leadu/src/presenter/widgets/goal_btn_bar.dart';
 import 'package:leadu/src/presenter/widgets/list_item.dart';
-import 'package:leadu/src/presenter/widgets/success_container.dart';
 import 'package:leadu/src/presenter/widgets/typing_card.dart';
 
 import '../../widgets/full_textfield.dart';
