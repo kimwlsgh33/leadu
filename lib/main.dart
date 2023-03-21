@@ -9,10 +9,7 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart' as trans;
 import 'package:leadu/src/config/routes/getx_routes.dart';
 import 'package:leadu/src/config/theme.dart';
 import 'package:leadu/src/presenter/blocs/observer.dart';
-import 'package:leadu/src/presenter/blocs/providers/goal_bloc.dart';
 import 'package:leadu/src/presenter/blocs/providers/theme_bloc.dart';
-import 'package:leadu/src/presenter/views/goals/goal_detail_screen.dart';
-import 'package:leadu/src/presenter/views/goals/goal_edit_screen.dart';
 import 'package:leadu/src/presenter/views/main/main_screen.dart';
 
 // import 'package:leadu/src/presenter/views/todos/today_screen.dart';
@@ -41,9 +38,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<ThemeBloc>(
           create: (_) => ThemeBloc(),
         ),
-        BlocProvider<GoalBloc>(
-          create: (_) => GoalBloc(),
-        ),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -55,21 +49,6 @@ class _MyAppState extends State<MyApp> {
             name: GetRouter.home,
             page: () => const MainScreen(),
             transition: trans.Transition.fade,
-          ),
-          GetPage(
-            name: "${GetRouter.goalDetail}/:id",
-            page: () {
-              return GoalDetailScreen(goal: Get.arguments);
-            },
-            transition: trans.Transition.fade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: GetRouter.goalEdit,
-            page: () {
-              return GoalEditScreen(goal: Get.arguments);
-            },
-            transition: trans.Transition.zoom,
           ),
         ],
       ),
